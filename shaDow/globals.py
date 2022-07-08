@@ -113,6 +113,7 @@ args_global.timestamp = timestamp
 
 # [STEP 5] auto choosing available NVIDIA GPU by querying nvidia-smi
 gpu_selected = args_global.gpu
+
 if gpu_selected is None:
     if 'gpu' in meta_config['device'] and meta_config['device']['gpu']['count'] > 0:
         if meta_config['device']['software']['os'] == 'linux':
@@ -135,7 +136,7 @@ if gpu_selected is None:
         else:
             raise NotImplementedError
     else:
-        gpu = -1
+        gpu_selected = -1
 # if gpu_selected >= 0:
 #     os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 #     os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu_selected)

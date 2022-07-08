@@ -5,9 +5,8 @@
 """
 inheritance from base_graph_samplers: C++ version connecting to the `backend/`
 """
-
 from __future__ import absolute_import, print_function
-
+ 
 from typing import List
 from graph_engine.frontend.samplers_base import (
     NodeIIDBase,
@@ -17,7 +16,6 @@ from graph_engine.frontend.samplers_base import (
 import ParallelSampler as cpp_para_sampler
 import os
 import glob
-
 
 class NodeIIDCpp(NodeIIDBase):
     def __init__(

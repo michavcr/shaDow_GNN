@@ -2,6 +2,10 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+import sys
+
+sys.path.append('para_graph_sampler')
+
 from graph_engine.frontend import TRAIN, VALID, TEST, MODE2STR, STR2MODE
 from shaDow.metric import Metrics
 import numpy as np
