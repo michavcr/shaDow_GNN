@@ -20,7 +20,7 @@ algorithm:
       - khop
 device:
   gpu:              # optional. no need this entry if your machine does not have GPU
-    count: 0
+    count: 1
     mem_limit: 3    # GB: not used for now. 
   cpu:
     max_threads: -1
