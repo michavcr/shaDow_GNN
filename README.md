@@ -102,7 +102,7 @@ We briefly describe the shaDow data format. You should not need to worry about t
 * `adj_train_raw.npz` / `adj_train_raw.npy`: The adjacency matrix induced by all training nodes (ONLY used in inductive learning). 
 * `label_full.npy`: The `numpy.ndarray` representing the labels of all the train / valid / test nodes. If this matrix is 2D, then a row is a one-hot encoding of the label(s) of a node. If this is 1D, then an element is the label index of a node. In any case, the first dimension equals the total number of nodes. 
 * `feat_full.npy`: The `numpy.ndarray` representing the node features. The first dimension of the matrix equals the total number of nodes. 
-* `split.npy`: The file stores a dictionary representing the train / valid / test splitting. The keys are 0 (int, for train) / 1 (for valid) / 2 (for test). The values are `numpy` array of the node indices for the corresponding split. 
+* `split.npy`: The file stores a dictionary representing the train / valid / test splitting. **The keys are 0 (int, for train) / 1 (for valid) / 2 (for test).** The values are `numpy` array of the node indices for the corresponding split. 
 * (Optional) `adj_full_undirected.npy`: This is a cache file storing the graph after converting `adj_full_raw` into undirected (e.g., the raw graph of `ogbn-arxiv` is directed). 
 * (Optional) `adj_train_undirected.npy`: Similar as above. Converted from `adj_train_raw` into undirected. 
 * (Optional) `cpp/adj_<full|train>_<indices|indptr|data>.bin`: These are the cache files for the C++ sampler. We store the corresponding `*.npy` / `*.npz` files as binary files so that the C++ sampler can directly load the graph without going through the layer of PyBind11 (see below). For gigantic graphs such as `ogbn-papers100M`, the conversion from `numpy.ndarray` to C++ `vector` seems to be slow (maybe an issue of PyBind11). 
@@ -183,6 +183,8 @@ In most cases, the only thing you need to overwrite is the `max_threads` field. 
 python -m shaDow.main --configs <your config *.yml file> --dataset <name of the graph> --gpu <index of the available GPU>
 ```
 
+**The gpu index can be set to -1 to let it automatically decide.** You can also skip the --gpu flag if you do not have a gpu on your machine.
+
 where the `*.yml` file specifies all the hyperparameters (e.g., GNN architecture, sampler, etc.). The name of the graph should correspond to the sub-directory name under `./data/` (we use all **lowercase** and omit the `ogbn-` or `ogbl-` prefix). 
 
 **Step 5** Check the logs of the training. We use the following protocol for logging. Our principle is to enable complete reproductivity of the previous runs. 
@@ -197,6 +199,30 @@ where the `*.yml` file specifies all the hyperparameters (e.g., GNN architecture
     * `epoch_<train|valid|test>.csv`: CSV file logging the accuracy and loss of each epoch
     * `final.csv`: CSV file logging the final accuracy on the full train / valid / test sets. 
     * pytorch checkpoint: the model weights and optimizer states. 
+
+## Running a model on your own dataset
+If you wish to run shaDow on your own task, you will have to follow these steps:
+
+**Step 1**: Get your dataset in a supported format. If your data come from OGB (Open Graph Benchmark) or from GraphSAINT, you can let the convertor formats them in the shadow format. Otherwise, you will to prepare it yourself in the shadow format: the format used by shaDowGNN is described in the above section "Data Format" (unroll the subsection "General data format"). You will have to create a directory "data" if has not been created yet and put the dataset in one of these three formats in a dedicated subdirectory.
+
+**Step 2**: Modify your config files to handle a new dataset: First, in your CONFIG.yml, you will have to add a line below 'metric:' to specify which metric should be used to evaluate the model on your task. You should also add a yaml file to precise the parameters values you want for the architecture: see some explainations in the subsection Table 1 below.
+
+**Step 3**: You have to add a line to the dictionary `DATA_ZOO` in `./para_graph_sampler/graph_engine/frontend/data_converter.py` :
+
+```
+    [name of your dataset]: {
+        kSpec: vCls([name of your dataset], [source of your dataset], [original name of your dataset])
+        for kSpec, vCls in ["_node_kSpec_vCls" if your task is node prediction
+                            "_link_kSpec_vCls" if link prediction]
+    }
+```
+
+Note: You will have to recompile the sampler after these modifications. See **Step 1 in section Build and Run** above.
+
+**Step 4**: Run the model on your task.
+```
+python -m shaDow.main --configs <your config *.yml file> --dataset <name of the graph> --gpu <index of the available GPU>
+```
 
 ## Reproducing the paper results
 
