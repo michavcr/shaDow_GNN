@@ -1,0 +1,2 @@
+Requirement already satisfied: scipy in /home/michael/anaconda3/envs/shadow-env/lib/python3.9/site-packages (1.8.1)
+Requirement already satisfied: numpy<1.25.0,>=1.17.3 in /home/michael/anaconda3/envs/shadow-env/lib/python3.9/site-packages (from scipy) (1.22.3)

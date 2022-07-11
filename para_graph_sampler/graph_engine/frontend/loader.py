@@ -27,6 +27,7 @@ def load_data(
     Return:
         Graph dataclass
     """
+
     prediction_task = DATA_ZOO[dataset]["ALL"].prediction_task
     printf("Loading training data..")
     prefix_l = prefix['local']
@@ -43,6 +44,7 @@ def load_data(
         convert2shaDow(dataset, prefix_l)
     # load data in shaDow format
     role = np.load(f"{prefix_l}/{dataset}/split.npy", allow_pickle=True)
+    
     if type(role) == np.ndarray:
         role = role[()]
     else:
@@ -50,6 +52,7 @@ def load_data(
     if prediction_task == 'node':        
         # role is used as index, which is required to be int64 (node_set won't take much mem anyways)
         node_set = {}
+
         for k in [TRAIN, VALID, TEST]:
             node_set[k] = np.asarray(role[k], dtype=np.int64)
         label_full = torch.from_numpy(np.load(f"{prefix_l}/{dataset}/label_full.npy"))

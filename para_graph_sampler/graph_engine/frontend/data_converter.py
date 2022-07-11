@@ -146,6 +146,10 @@ DATA_ZOO = {
     "ppa": {
         kSpec: vCls("ppa", "OGB", "ogbl-ppa")
         for kSpec, vCls in _link_kSpec_vCls
+    },
+    "cora": {
+        kSpec: vCls("cora", "OGB", "cora")
+        for kSpec, vCls in _node_kSpec_vCls
     }
 }
 

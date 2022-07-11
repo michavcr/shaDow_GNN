@@ -1,0 +1,31 @@
+Collecting package metadata (current_repodata.json): ...working... done
+Solving environment: ...working... done
+
+## Package Plan ##
+
+  environment location: /home/michael/anaconda3/envs/shadow-env
+
+  added / updated specs:
+    - pytorch
+
+
+The following packages will be downloaded:
+
+    package                    |            build
+    ---------------------------|-----------------
+    ca-certificates-2022.4.26  |       h06a4308_0         124 KB
+    certifi-2022.6.15          |   py39h06a4308_0         153 KB
+    ------------------------------------------------------------
+                                           Total:         277 KB
+
+The following packages will be UPDATED:
+
+  openssl               anaconda::openssl-1.1.1o-h7f8727e_0 --> pkgs/main::openssl-1.1.1p-h5eee18b_0
+
+The following packages will be SUPERSEDED by a higher-priority channel:
+
+  ca-certificates                                  anaconda --> pkgs/main
+  certifi                                          anaconda --> pkgs/main
+
+
+Proceed ([y]/n)? 
