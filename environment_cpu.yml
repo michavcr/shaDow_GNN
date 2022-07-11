@@ -1,0 +1,4 @@
+name: shadow-env2
+channels:
+  - defaults
+prefix: /home/michael/anaconda3/envs/shadow-env2
