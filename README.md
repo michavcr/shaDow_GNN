@@ -205,7 +205,7 @@ If you wish to run shaDow on your own task, you will have to follow these steps:
 
 **Step 1**: Get your dataset in a supported format. If your data come from OGB (Open Graph Benchmark) or from GraphSAINT, you can let the convertor formats them in the shadow format. Otherwise, you will to prepare it yourself in the shadow format: the format used by shaDowGNN is described in the above section "Data Format" (unroll the subsection "General data format"). You will have to create a directory "data" if has not been created yet and put the dataset in one of these three formats in a dedicated subdirectory.
 
-**Step 2**: Modify your config files to handle a new dataset: First, in your CONFIG.yml, you will have to add a line below 'metric:' to specify which metric should be used to evaluate the model on your task. You should also add a yaml file to precise the parameters values you want for the architecture: see some explainations in the subsection Table 1 below.
+**Step 2**: Modify your config files to handle a new dataset: First, in your CONFIG.yml, you will have to add a line below 'metric:' to specify which metric should be used to evaluate the model on your task. You should also add a yaml file to precise the parameters values you want for the architecture: see some explanations in the subsection Table 1 below.
 
 **Step 3**: You have to add a line to the dictionary `DATA_ZOO` in `./para_graph_sampler/graph_engine/frontend/data_converter.py` :
 
